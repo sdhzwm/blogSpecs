@@ -1,2 +1,1 @@
-# blogSpecs
-个人博客
+#blogSpecs

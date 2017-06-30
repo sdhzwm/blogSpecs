@@ -1,0 +1,301 @@
+---
+title: Swift：类和结构体小结
+date: 2017-06-29 22:59:31
+categories: [Swift,开发总结]
+tags: [Swift,开发总结]
+---
+> 最近在学习python，在学习的过程当中，总是忍不住的去和swift相互去对比、验证。不过在对比的时候，却发现自己平时思考中的漏洞到底有多大。趁着这份热度，翻看了下《swift进阶》，留作笔记，以备以后查阅。
+
+ 在Swift中存储结构化数据的有三种选择分别是：结构体、枚举、类以及使用闭包捕获变量。在这里闭包之后单独讨论，主要讨论下前面三者的异同。
+-  结构体和和枚举是值类型，而类是引用类型。
+- 内存的管理方式不同。结构体可以被直接持有及访问，而类的实例只能通过引用来间接访问。也就是说结构体的持有者是唯一的，但是类却能有很多人持有者。
+- 除非类被标记为`final`,否则它都是可以继承的，而结构体和枚举不能被继承。
+<!-- more --> 
+
+### 值类型和引用类型
+
+- 当我们比较两个变量时，我们并不关心她们是否指向内存中的同一地址，我们比较的是他们是否指向同样的变量。我们通过他们的属性来比较变量，我们称之为值类型。而我们对它们进行比较的时候，我们不是去比较它们的属性，而是去检查两者的内存地址是否一样，这些类型都是引用类型。
+- 值永远不会改变，它们具有不可变性，而不可变也让代办具有线程安全的特性，因为不可变的东西可以在线程之间安全共享
+- Swift 中，结构体是用来构建值类型的。结构体不能通过引用来进行比较，你只能通过它们的属性来比较两个结构体。虽然我们可以用 var 来在结构体中声明可变的变量属性，但是这个可变性只体现在变量本身上，而不是指里面的值。改变一个结构体变量的属性，在概念上来说，和为整个变量赋值一个全新的结构体是等价的。我们总是使用一个新的结构体，并设置被改变的属性值，然后用它替代原来的结构体。
+- 结构体只有一个持有者。比如我们将结构体传递给一个函数时，函数将接受到得结构体的复制，他能改变的只能是它自己的这份复制。而对于对象来说，他是通过传递引用来工作的，所以类对象会拥有很多的持有者。
+- 结构体不会造成引用循环，而类和函数这样的引用类型则可能会。
+- 值是直接存储在数组的内存中的，而对象的数组中包含的只是对象的引用。所以很多时候结构体是存放在栈中而类放在堆中。
+- 值类型意味着一个值变量被复制时，这个值本身也会被复制，而不知限于对这个值的引用的复制。另外结构体是用写时复制的方式来实现的，对数据的复制只会在其中某个值实际改变时才会发生
+- 结构体重的所有值类型都会被复制而引用类型却只有对象的引用会被复制，对象本身不被复制，复制的是其本身(这里要有代码)
+
+### 可变性
+- 将一个结构体变量标记为let可以确保它是不可变的，而一个对象标记为let只是避免了引用变量被改变
+-  在类中可以使用`var`和`let`来控制属性的可变和不可变性。
+代码如下：
+```swift
+let mutableArray: NSMutableArray = [1, 2, 3]
+let otherArray = mutableArray
+mutableArray.add(4)
+otherArray // ( 1, 2, 3, 4 )
+
+class BiaryScanner {
+    var postion:Int
+    let data:Data
+    init(data:Data) {
+        self.postion = 0;
+        self.data = data;
+    }
+}
+extension BiaryScanner {
+    func scanByte() -> UInt8? {
+        guard postion < data.endIndex else {
+            return nil
+        }
+        postion += 1
+        return data[postion - 1]
+    }
+}
+func scanRemainingBytes(scanner:BiaryScanner) {
+    while let byte = scanner.scanByte() {
+        print(byte)
+    }
+}
+let scanner = BiaryScanner(data: "hi".data(using: .utf8)!)
+scanRemainingBytes(scanner: scanner)
+//104
+//105
+
+```
+### 结构体
+- 对于结构体，Swift会自动按照成员变量为它添加初始化方法。
+- 结构体和对象不同，所有的结构体变量都是唯一的
+- 结构体内也可以包含其他结构体
+- 值类型意味着一个值变量被复制时，这个值的本身也会被复制，而不只限于这个值的引用的复制。
+```swift
+var a = 10
+var b = a
+b +=1
+b//11
+a // 10
+```
+既然变量类型的是这样的运作的，那么对于同为值类型的结构体应该也同样如此了，比如在开发中常用到的
+```swift
+//创建结构体
+struct Point {
+    var x:Int
+    var y:Int
+}
+let origin = Point(x: 0, y: 0) //不可变的origin
+
+```
+在swift中结构体拥有值语义，对于使用了let定义的结构体变量，我们不能够改变它的任何属性，即便是在结构体内定义了var的属性。但因为origin是用let定义的，所以不能够修改，所以一下代码是错误的
+```swift
+origin.x = 10  //并不会执行通过
+```
+不过我们需要创建一个可变的变量的时候，只需要将`let` 改为`var`就可以了。代码如下：
+```swift
+var otherPoint = Point(x:0,y:0)
+otherPoint.x = 10
+otherPoint //（10,0）
+```
+如果需要一个经常使用的结构体值，我们可以将其作为一个静态属性定义在拓展里。比如：
+```swift
+extension Point {
+    static let origin = point(x: 10, y: 10)
+}
+
+Point.origin
+```
+当然在结构体中同样也可以包含其他的结构体，比如
+```swift
+struct Size {
+    var width: Int
+    var height: Int
+}
+struct Rectangle {
+    var origin: Point
+    var size: Size
+}
+```
+上面说过，Swift会自动按照成员变量为它添加初始化方法，当我们需要为自己的结构体自定义初始化方式时，我们可以直接添加到结构体的定义中去。不过结构体内如果包含了自定义的初始化方法，那么Swift就不再成基于成员变量的初始化方法了。例如：
+```swift
+extension Rectangle {
+    init(x: Int = 0, y: Int = 0, width: Int, height: Int) {
+        origin = Point(x: x, y: y)
+        size = Size(width: width, height: height)
+    }
+}
+```
+如果我们定义了可变变量，那么就可以为它添加didSet，这样当变量改变时，这个代码块就会被调用。对结构体进行改变，也就等同于重新为它进行赋值。当我们改变了结构体中某个深层次的属性时，其实还是改变了结构体，所以didSet会被触发：
+```swift
+var screen = Rectangle(width: 320, height: 480) {
+didSet {
+print("Screen changed: \(screen)")
+}
+}
+```
+如果我们想改变`self`或者是改变 `self`自身或者嵌套的任何属性，我们就需要将方法标记为`mutating`:
+```swift
+extension Rectangle {
+     func  translate(by offset: point) {
+        // 错误：不能赋值属性: 'self' 是不可变的
+        origin = origin + offset
+    }
+}
+//这样是对的
+extension Rectangle {
+   mutating  func  translate(by offset: point) {
+        // 错误：不能赋值属性: 'self' 是不可变的
+        origin = origin + offset
+    }
+}
+```
+当有了`mutating`关键字，我们才能在方法内部进行改变，并且意味着我们改变了`self`的行为，现在它代表着一个var而不是let。
+很多时候，一个方法会同时有可变和不可变版本。比如说数组有`sort()`和`sorted()`，前者是个`mutating`，将会原地排序，而后者则会返回一个新的数组。
+**sort和sorted的名字是遵循了Swift的API设计准则的。不可变的版本应该以-ed或者-ing结尾**
+当处理可变代码时，很容易就会引入 bug；因为我们刚刚检查过的对象可能会被另一个线程更改 (或者甚至是被同一个线程的其他方法更改)，所以你的假设可能是无效的。
+含有 mutating 方法和属性的 Swift 结构体就没有这个问题。对于结构体的更改所产生的副作用只会影响本地，它只被应用在当前的结构体变量上。因为所有的结构体变量都是唯一的 (或者换句话说，所有的结构体值都有且仅有一个持有者)，它几乎不可能产生类似的 bug。唯一会出现问题的地方是你在不同的线程中引用了同一个全局的结构体变量。
+### 内存管理
+####  weak
+- weak,weak 引用表示当被引用的对象被释放时，将引用设置为 nil。 因为不会被强引用，所以打破了引用循环
+```swift
+class Window {
+    weak var rootView :View?
+    deinit {
+        print("deinit--------Window")
+    }
+}
+class View {
+    var window:Window
+    init(window:Window) {
+        self.window = window
+    }
+    
+    deinit {
+        print("deinit--------View")
+    }
+}
+//释放顺序为
+deinit--------View
+deinit--------Window
+```
+**因为 weak 引用的变量可以变为 nil，所以它们必须是可选值类型**
+####  unowned 
+```swift
+class Window {
+    var rootView :View?
+    deinit {
+        print("deinit--------Window")
+    }
+}
+class View {
+    unowned var window:Window
+    init(window:Window) {
+        self.window = window
+    }
+    
+    deinit {
+        print("deinit--------View")
+    }
+}
+//释放顺序
+deinit--------Window
+deinit--------View
+
+```
+`unowned 关键字，这将不持有引用的对象，但是却假定该引用会一直有效` 
+ 对每个 unowned 的引用，Swift 运行时将为这个对象维护另外一个引用计数。当所有的 strong 引用消失时，对象将把它的资源 (比如对其他对象的引用) 释放掉。不过，这个对象本身的内存将继续存在，直到所有的 unowned 引用也都消失。这部分内存将被标记为无效 (有时候我们也把它叫做僵尸 (zombie) 内存)，当我们试图访问这样的 unowned 引用时，就会发生运行时错误。
+
+**一个 weak 变量总是需要被定义为 var，而 unowned 变量可以使用 let 来定义。不过，只有在你确定你的引用将一直有效时，才应该使用 unowned**
+
+### 结构体和类的实践
+
+####  类 
+
+```swift
+typealias USDCents  = Int
+
+class Account {
+    var funds:USDCents = 0
+    init(funds: USDCents) {
+        self.funds = funds
+    }
+}
+
+let xiaoming = Account(funds: 100)
+
+let daming = Account(funds: 200)
+
+func transfer(amount:USDCents, souce:Account,destination:Account) -> Bool {
+    guard souce.funds >= amount else {return false}
+    souce.funds -= amount
+    destination.funds += amount
+    return true
+}
+
+transfer(amount: 50, souce: xiaoming, destination: daming)
+
+xiaoming.funds //50
+
+daming.funds // 250
+
+```
+**同一时间里从不同线程中调用这个函数 (也就是说，你需要在一个串行队列中执行所有调用)。否则，并发线程将导致系统中的资金莫名其妙地消失或者出现,后面会说这个事情**
+
+####  结构体 
+```swift
+typealias USDCents  = Int
+
+struct Account {
+    var funds:USDCents
+}
+
+var xiaoming = Account(funds: 100)
+
+var daming = Account(funds: 200)
+
+func transfer(amount:USDCents, souce:Account,destination:Account) -> (source:Account,destination:Account)? {
+    guard souce.funds >= amount else {return nil}
+    var newSouce = souce
+    newSouce.funds -= amount
+    var newDestination = destination
+    newDestination.funds += amount
+    return (newSouce,newDestination)
+}
+
+if let(newSource,newDestination) = transfer(amount: 50, souce: xiaoming, destination: daming) {
+    newSource.funds
+    xiaoming.funds = newSource.funds
+    daming.funds = newDestination.funds
+}
+
+xiaoming.funds //50
+
+daming.funds //250
+```
+**需要确保对这个单一数据源的更新是一个接一个进行的。不过，只在一个地方做这件事要比在代码的各个地方都去确保进行线程安全调用要来得容易得多 **
+
+#### inout
+
+```swift
+typealias USDCents  = Int
+
+struct Account {
+    var funds:USDCents
+}
+
+var xiaoming = Account(funds: 100)
+
+var daming = Account(funds: 200)
+
+func transfer(amount:USDCents, souce:inout Account, destination:inout Account) -> Bool {
+    guard souce.funds >= amount else {return false}
+    souce.funds -= amount
+    destination.funds += amount
+    return true
+
+}
+
+transfer(amount: 50, souce: &xiaoming, destination: &daming)
+
+xiaoming.funds// 50
+
+daming.funds //250
+
+```
+**当我们调用含有 inout 修饰的参数的函数时，我们需要为变量加上 & 符号。不过注意，和传递 C 指针的语法不同，这里不代表引用传递。当函数返回的时候，被改变的值会被复制回调用者中去**
