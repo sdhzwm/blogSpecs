@@ -20,7 +20,7 @@ after_script:
 # E: Build LifeCycle
 branches:
 only:
-- source
+- blogSpecs
 env:
 global:
 - GH_REF: github.com/sdhzwm/sdhzwm.github.io.git
