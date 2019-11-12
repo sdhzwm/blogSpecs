@@ -7,8 +7,8 @@ title: 知行录
 subtitle: 知而行之，行而践之。
 description: 
 author: 知行
-language: zh-CN #zh-CN / zh-TW / ja / en
-timezone: Asia/Shanghai #and more
+language: zh-cn
+
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: Nlvi
+theme: even
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

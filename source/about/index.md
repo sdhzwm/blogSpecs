@@ -1,7 +1,6 @@
 ---
 title: About
-type: "about"
-comments: false
+layout: page
 ---
 
 ## 关于我

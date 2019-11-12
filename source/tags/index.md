@@ -1,5 +1,4 @@
 ---
 title: tags
-date: 2017-06-09 23:23:59
-type: tags
+layout: tags
 ---
