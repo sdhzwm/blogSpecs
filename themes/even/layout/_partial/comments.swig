@@ -13,6 +13,8 @@
       </div>  
     {%- elif theme.gitalk.enable -%}
       <div id="gitalk-container"></div>
-    {%- endif -%}
+    {% elseif theme.valine.appid and theme.valine.appkey %}
+      <div id="vcomments"></div>
+    {% endif %}
   </div>
 {%- endif -%}
