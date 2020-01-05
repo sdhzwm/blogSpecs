@@ -15,8 +15,8 @@ layout: page
 
 ## 联系
 
-- [Github](https://github.com/sdhzwm)
-- 邮箱:sdhzwm@gmail.com
+- Github: [Github](https://github.com/sdhzwm)
+- 邮箱: sdhzwm@gmail.com
 
 ## 我相信的东西
 
@@ -53,8 +53,8 @@ layout: page
 
 - Macbook 15'
 - Philips 27’显示器
-- iPad pro 9.7‘
-- iPhone X、iPhone se。Phone se为备用机
+- iPad Pro 9.7‘
+- iPhone X、iPhone SE。iPhone SE为备用机
 - airPad
 - 搜狗语音转写笔
 
@@ -64,7 +64,7 @@ layout: page
 
 ![微信](about/about.png?r=90&w=100&h=100)
 
-## Changlog
+## Changelog
 
 - 20191111 优化博客，继续删除以往内容，清晰新的方向
 - 20171027 切换环境，重构博客，删除以往记录
