@@ -55,7 +55,7 @@ layout: page
 - Philips 27’显示器
 - iPad Pro 9.7‘
 - iPhone X、iPhone SE。iPhone SE为备用机
-- airPad
+- airPads
 - 搜狗语音转写笔
 
 ## 一起喝杯咖啡
