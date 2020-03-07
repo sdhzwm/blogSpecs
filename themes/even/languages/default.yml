@@ -1,5 +1,7 @@
 menu:
   home: Home
+  bookList: BookList
+  wiseman: Wiseman
   archives: Archives
   tags: Tags
   categories: Categories
