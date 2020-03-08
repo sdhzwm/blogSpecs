@@ -1,7 +1,8 @@
 menu:
   home: Home
-  bookList: BookList
-  wiseman: Wiseman
+  books: books
+  wiseman: wiseman
+  movies: movies
   archives: Archives
   tags: Tags
   categories: Categories
@@ -21,6 +22,16 @@ posts:
   readmore: Read more..
   visits: Visits
   reward: 'Reward'
+
+books:
+  bookReading: 在读
+  bookWish: 想读
+  bookRead: 读过
+
+movies:
+  movieWatching: 在看
+  movieWish: 想看
+  movieWatched: 看过
 
 copyright:
   author: 'Author'

@@ -1,4 +1,0 @@
----
-title: movie
-layout: page
----

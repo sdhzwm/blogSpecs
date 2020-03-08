@@ -68,7 +68,18 @@ sitemap:
   path: sitemap.xml
 baidusitemap:
   path: baidusitemap.xml
-  
+
+douban:
+  user: 40121497
+  builtin: true
+  book:
+    title: '阅读'
+    quote: '总有一束光，会照亮你的世界'
+  movie:
+    title: '电影'
+    quote: '用心品味，不同的世界'
+  timeout: 10000
+
 theme: even
 
 # Deployment

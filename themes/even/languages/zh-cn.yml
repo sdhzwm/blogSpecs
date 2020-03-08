@@ -1,5 +1,8 @@
 menu:
   home: 首页
+  books: 阅读
+  wiseman: 智者
+  movies: 影音
   archives: 归档
   tags: 标签
   categories: 分类
@@ -18,6 +21,12 @@ posts:
   readmore: 阅读更多
   visits: '阅读次数'
   reward: '赞赏支持'
+  movieWatching: 在看
+  movieWish: 想看
+  movieWatched: 看过
+  bookReading: 在读
+  bookWish: 想读
+  bookRead: 读过
 
 copyright:
   author: '原文作者'
