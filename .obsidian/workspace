@@ -1,0 +1,95 @@
+{
+  "main": {
+    "id": "fd849c7b1aa79626",
+    "type": "split",
+    "children": [
+      {
+        "id": "206b44b8ca7883b5",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "source/wiseman/index.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "422834ccc5a59061",
+    "type": "split",
+    "children": [
+      {
+        "id": "62c2328c90fb5450",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "858597d813de0c41",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "5e77f4c23b654242",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "c7c4ecd748396361",
+    "type": "split",
+    "children": [
+      {
+        "id": "21f79711323d050c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "828c018868e15fa9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "source/wiseman/index.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "source/wiseman/index.md",
+    "source/categories/index.md",
+    "source/archives/index.md",
+    "source/about/index.md"
+  ]
+}
