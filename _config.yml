@@ -86,5 +86,5 @@ theme: even
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/sdhzwm/sdhzwm.github.io.git
+  repo: git@github.com:sdhzwm/sdhzwm.github.io.git
   branch: master
